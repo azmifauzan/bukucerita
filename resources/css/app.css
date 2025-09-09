@@ -2,6 +2,124 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom styles for Buku Cerita */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    body {
+        @apply bg-gray-50 text-dark-900;
+    }
+}
+
+@layer components {
+    /* Button Styles */
+    .btn-primary {
+        @apply bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+    }
+    
+    .btn-primary-gradient {
+        @apply bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-medium py-2.5 px-5 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center;
+    }
+    
+    .btn-secondary {
+        @apply bg-dark-800 hover:bg-dark-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+    }
+    
+    .btn-admin {
+        @apply bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-medium py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center;
+    }
+    
+    .btn-logout {
+        @apply bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center;
+    }
+    
+    .btn-outline {
+        @apply border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center shadow-sm hover:shadow-md;
+    }
+    
+    .card {
+        @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden;
+    }
+    
+    /* Navbar Styles */
+    .navbar-link {
+        @apply text-gray-700 hover:text-orange-600 font-medium transition-all duration-200 flex items-center py-2 px-3 rounded-lg hover:bg-orange-50;
+    }
+    
+    .navbar-link-active {
+        @apply text-orange-700 bg-orange-100 font-semibold flex items-center py-2 px-3 rounded-lg border border-orange-200 shadow-sm;
+    }
+    
+    /* Mobile Menu Styles */
+    .mobile-link {
+        @apply flex items-center w-full text-gray-700 hover:text-orange-600 hover:bg-orange-50 font-medium py-3 px-4 rounded-lg transition-all duration-200;
+    }
+    
+    .mobile-link-active {
+        @apply flex items-center w-full text-orange-700 bg-gradient-to-r from-orange-100 to-orange-50 font-semibold py-3 px-4 rounded-lg border border-orange-200 shadow-sm;
+    }
+    
+    .mobile-btn-primary {
+        @apply flex items-center w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-medium py-3 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200;
+    }
+    
+    .mobile-btn-admin {
+        @apply flex items-center w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-medium py-3 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200;
+    }
+    
+    .mobile-btn-logout {
+        @apply flex items-center w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-3 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200;
+    }
+    
+    .mobile-btn-outline {
+        @apply flex items-center w-full border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md;
+    }
+    
+    /* Admin Layout Styles */
+    .admin-navbar-link {
+        @apply flex items-center px-4 py-2 text-purple-100 hover:text-white hover:bg-purple-500 rounded-lg font-medium transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-md;
+    }
+    
+    .admin-navbar-link-active {
+        @apply flex items-center px-4 py-2 text-white bg-purple-500 rounded-lg font-medium shadow-md;
+    }
+    
+    .admin-mobile-link {
+        @apply flex items-center px-4 py-3 text-purple-100 hover:text-white hover:bg-purple-600 rounded-lg font-medium transition-all duration-200;
+    }
+    
+    .admin-mobile-link-active {
+        @apply flex items-center px-4 py-3 text-white bg-purple-600 rounded-lg font-medium shadow-md;
+    }
+    
+    .admin-btn-outline {
+        @apply inline-flex items-center px-3 py-2 border-2 border-purple-200 text-purple-100 font-medium rounded-lg hover:bg-purple-100 hover:text-purple-700 hover:border-purple-300 transition-all duration-200;
+    }
+    
+    .admin-btn-danger {
+        @apply inline-flex items-center px-3 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white font-medium rounded-lg shadow-md hover:from-red-600 hover:to-red-700 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200;
+    }
+    
+    .admin-mobile-btn-outline {
+        @apply flex items-center px-4 py-3 border-2 border-purple-300 text-purple-100 font-medium rounded-lg hover:bg-purple-100 hover:text-purple-700 hover:border-purple-400 transition-all duration-200;
+    }
+    
+    .admin-mobile-btn-danger {
+        @apply flex items-center px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-medium rounded-lg shadow-md hover:from-red-600 hover:to-red-700 hover:shadow-lg transition-all duration-200;
+    }
+    
+    /* Admin Cards */
+    .admin-card {
+        @apply bg-white rounded-xl shadow-md border border-purple-100 p-6 hover:shadow-lg transition-all duration-200 hover:border-purple-200;
+    }
+    
+    .admin-stat-card {
+        @apply bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl shadow-lg p-6 hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200;
+    }
+}
+
 [x-cloak] {
     display: none;
 }
