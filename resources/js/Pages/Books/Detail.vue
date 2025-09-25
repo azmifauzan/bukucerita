@@ -62,11 +62,11 @@
               </div>
               
               <div class="space-y-3">
-                <a :href="book.link" 
-                   target="_blank"
+                <button 
+                   @click="scrollToStory"
                    class="w-full btn-primary text-center block">
-                  📖 Baca Cerita di Gemini
-                </a>
+                  📖 Baca Cerita Interaktif
+                </button>
                 
                 <Link v-if="canEdit" 
                       :href="route('books.edit', book.id)" 
@@ -89,29 +89,44 @@
           </div>
 
           <!-- Gemini Story Embed -->
-          <div class="card mb-8">
+          <div id="gemini-story-embed" class="card mb-8">
             <div class="p-6">
               <h2 class="text-xl font-bold text-dark-900 mb-4">Cerita Interaktif</h2>
               <p class="text-gray-600 mb-4">
-                Klik tombol di bawah untuk membaca cerita lengkap di Google Gemini Story Book.
-                Cerita akan dibuka di tab baru dengan pengalaman membaca yang interaktif.
+                Baca cerita lengkap langsung di sini dengan pengalaman membaca yang interaktif dari Google Gemini Story Book.
               </p>
               
-              <div class="bg-gray-50 rounded-lg p-6 text-center">
-                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span class="text-2xl">📚</span>
+              <div class="bg-gray-50 rounded-lg overflow-hidden">
+                <div class="bg-primary-50 px-4 py-3 border-b border-gray-200">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                      <span class="text-lg">📚</span>
+                      <div>
+                        <h3 class="font-medium text-gray-900">{{ book.judul }}</h3>
+                        <p class="text-sm text-gray-600">oleh {{ book.pengarang }}</p>
+                      </div>
+                    </div>
+                    <a :href="book.link" 
+                       target="_blank"
+                       class="text-sm text-primary-600 hover:text-primary-700 flex items-center">
+                      <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/>
+                        <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"/>
+                      </svg>
+                      Buka di Tab Baru
+                    </a>
+                  </div>
                 </div>
-                <h3 class="font-medium text-gray-900 mb-2">{{ book.judul }}</h3>
-                <p class="text-sm text-gray-600 mb-4">Cerita interaktif oleh {{ book.pengarang }}</p>
-                <a :href="book.link" 
-                   target="_blank"
-                   class="inline-flex items-center btn-primary">
-                  <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/>
-                    <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"/>
-                  </svg>
-                  Buka di Gemini Story Book
-                </a>
+                
+                <div class="relative">
+                  <iframe 
+                    :src="book.link"
+                    class="w-full h-[600px] border-0"
+                    title="Gemini Story Book"
+                    loading="lazy"
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                  ></iframe>
+                </div>
               </div>
             </div>
           </div>
@@ -173,14 +188,25 @@ const props = defineProps({
 })
 
 const canEdit = computed(() => {
-  return props.book.user_id === window.Laravel?.user?.id
+  return window.Laravel?.user && props.book.user_id === window.Laravel.user.id
 })
+
+const scrollToStory = () => {
+  const storyElement = document.querySelector('#gemini-story-embed')
+  if (storyElement) {
+    storyElement.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    })
+  }
+}
 </script>
 
 <style scoped>
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

@@ -22,8 +22,8 @@ class BookController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('judul', 'like', "%{$search}%")
-                  ->orWhere('pengarang', 'like', "%{$search}%")
-                  ->orWhere('sinopsis', 'like', "%{$search}%");
+                    ->orWhere('pengarang', 'like', "%{$search}%")
+                    ->orWhere('sinopsis', 'like', "%{$search}%");
             });
         }
 
@@ -58,7 +58,7 @@ class BookController extends Controller
     public function create()
     {
         $categories = Category::all();
-        
+
         return Inertia::render('Books/Upload', [
             'categories' => $categories,
         ]);
@@ -102,8 +102,8 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        // Only show approved books or user's own books
-        if ($book->status !== 'approved' && $book->user_id !== Auth::id()) {
+        // Only show approved books or user's own books (allow guests for approved books)
+        if ($book->status !== 'approved' && (! Auth::check() || $book->user_id !== Auth::id())) {
             abort(404);
         }
 
@@ -134,7 +134,7 @@ class BookController extends Controller
         }
 
         $categories = Category::all();
-        
+
         return Inertia::render('Books/Edit', [
             'book' => $book,
             'categories' => $categories,
@@ -184,7 +184,7 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         // Only allow deleting own books or admin
-        if ($book->user_id !== Auth::id() && !Auth::user()?->isAdmin()) {
+        if ($book->user_id !== Auth::id() && ! Auth::user()?->isAdmin()) {
             abort(403);
         }
 
