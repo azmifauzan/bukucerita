@@ -156,7 +156,7 @@
                         <!-- Book Link -->
                         <div>
                             <label for="link" class="block text-sm font-medium text-gray-700 mb-2">
-                                Link Buku Online *
+                                Link Google Gemini *
                             </label>
                             <input
                                 id="link"
@@ -164,10 +164,10 @@
                                 type="url"
                                 required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
-                                placeholder="https://example.com/book.pdf"
+                                placeholder="https://gemini.google.com/share/..."
                             />
                             <p class="mt-1 text-sm text-gray-500">
-                                Link ke file PDF atau halaman buku online yang bisa diakses publik
+                                Link shared conversation dari Google Gemini tempat cerita dibuat
                             </p>
                             <InputError class="mt-2" :message="form.errors.link" />
                         </div>
@@ -188,6 +188,24 @@
                                 Link gambar cover buku (opsional). Jika tidak diisi, akan menggunakan cover default.
                             </p>
                             <InputError class="mt-2" :message="form.errors.cover" />
+                        </div>
+
+                        <!-- YouTube Video -->
+                        <div>
+                            <label for="youtube_link" class="block text-sm font-medium text-gray-700 mb-2">
+                                Link Video YouTube
+                            </label>
+                            <input
+                                id="youtube_link"
+                                v-model="form.youtube_link"
+                                type="url"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
+                                placeholder="https://youtube.com/watch?v=... atau https://youtu.be/... (opsional)"
+                            />
+                            <p class="mt-1 text-sm text-gray-500">
+                                Link YouTube untuk video pendukung cerita (opsional). Video akan bisa ditonton langsung di aplikasi.
+                            </p>
+                            <InputError class="mt-2" :message="form.errors.youtube_link" />
                         </div>
 
                         <!-- Submit Button -->
@@ -273,6 +291,7 @@ const form = useForm({
     category_id: '',
     link: '',
     cover: '',
+    youtube_link: '',
     age_min: 3,
     age_max: 12
 })

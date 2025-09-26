@@ -10,7 +10,6 @@ use Inertia\Inertia;
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
-Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
 Route::get('/guide', [GuideController::class, 'index'])->name('guide');
 
 // Authentication required routes
@@ -22,6 +21,14 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    // Custom Profile Route (Override Jetstream default)
+    Route::get('/user/profile', function () {
+        return Inertia::render('Profile/CustomShow', [
+            'sessions' => collect([]), // Empty for now, will be filled by Jetstream if needed
+            'confirmsTwoFactorAuthentication' => false,
+        ]);
+    })->name('profile.show');
 
     // Book management - specific routes first, then dynamic routes
     Route::get('/books/create', [BookController::class, 'create'])->name('books.create');
@@ -42,3 +49,6 @@ Route::middleware([
         Route::delete('/categories/{category}', [AdminController::class, 'destroyCategory'])->name('categories.destroy');
     });
 });
+
+// This route needs to be outside the middleware group for public access, but after /books/create to avoid conflicts
+Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');

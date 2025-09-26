@@ -16,6 +16,7 @@ class User extends Authenticatable
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
+
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
@@ -72,6 +73,6 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->email === 'admin@bukucerita.com'; // Simple admin check
+        return $this->email === 'admin@bukucerita.my.id'; // Simple admin check
     }
 }

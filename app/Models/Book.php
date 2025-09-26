@@ -16,6 +16,7 @@ class Book extends Model
         'sinopsis',
         'cover',
         'link',
+        'youtube_link',
         'status',
         'category_id',
         'user_id',

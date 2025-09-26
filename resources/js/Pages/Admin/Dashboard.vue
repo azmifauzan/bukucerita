@@ -144,6 +144,38 @@
         </div>
       </div>
 
+      <!-- Admin Settings Section -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <!-- Change Password Card -->
+        <ChangePasswordCard />
+        
+        <!-- Admin Profile Settings -->
+        <div class="bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+          <div class="p-6">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center space-x-3">
+                <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-3 rounded-lg shadow-lg">
+                  <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">Profil Admin</h3>
+                  <p class="text-sm text-gray-600">Kelola informasi profil admin</p>
+                </div>
+              </div>
+              <Link :href="route('profile.show')" class="px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg font-medium transition-all duration-200 flex items-center text-sm">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                </svg>
+                Edit Profil
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Quick Actions Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Link :href="route('admin.books')" class="admin-card hover:shadow-xl group">
@@ -208,6 +240,7 @@
 import { ref } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
 import AdminLayout from '@/Layouts/AdminLayout.vue'
+import ChangePasswordCard from '@/Components/ChangePasswordCard.vue'
 
 const props = defineProps({
   stats: Object,

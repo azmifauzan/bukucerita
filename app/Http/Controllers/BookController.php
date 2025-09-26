@@ -76,6 +76,7 @@ class BookController extends Controller
             'category_id' => 'required|exists:categories,id',
             'link' => 'required|url',
             'cover' => 'nullable|url',
+            'youtube_link' => 'nullable|url',
             'age_min' => 'required|integer|min:1|max:18',
             'age_max' => 'required|integer|min:1|max:18|gte:age_min',
         ]);
@@ -87,6 +88,7 @@ class BookController extends Controller
             'category_id' => $request->category_id,
             'link' => $request->link,
             'cover' => $request->cover,
+            'youtube_link' => $request->youtube_link,
             'age_min' => $request->age_min,
             'age_max' => $request->age_max,
             'user_id' => Auth::id(),
@@ -158,6 +160,7 @@ class BookController extends Controller
             'category_id' => 'required|exists:categories,id',
             'link' => 'required|url',
             'cover' => 'nullable|url',
+            'youtube_link' => 'nullable|url',
             'age_min' => 'required|integer|min:1|max:18',
             'age_max' => 'required|integer|min:1|max:18|gte:age_min',
         ]);
@@ -169,6 +172,7 @@ class BookController extends Controller
             'category_id' => $request->category_id,
             'link' => $request->link,
             'cover' => $request->cover,
+            'youtube_link' => $request->youtube_link,
             'age_min' => $request->age_min,
             'age_max' => $request->age_max,
             'status' => 'pending', // Reset to pending after edit

@@ -21,7 +21,12 @@ class BookFactory extends Factory
             'pengarang' => fake()->name(),
             'sinopsis' => fake()->paragraph(3),
             'cover' => 'https://picsum.photos/400/600?random=' . fake()->numberBetween(1, 100),
-            'link' => 'https://notebooklm.google.com/notebook/' . fake()->uuid(),
+            'link' => 'https://gemini.google.com/share/' . fake()->regexify('[a-f0-9]{16}'),
+            'youtube_link' => fake()->optional(0.3)->randomElement([
+                'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                'https://youtu.be/ScMzIvxBSi4',
+                'https://www.youtube.com/watch?v=9bZkp7q19f0',
+            ]),
             'status' => fake()->randomElement(['approved', 'pending', 'draft']),
             'category_id' => \App\Models\Category::factory(),
             'user_id' => \App\Models\User::factory(),

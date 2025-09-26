@@ -68,7 +68,7 @@
                 </div>
                 
                 <!-- Admin Link -->
-                <Link v-if="$page.props.auth.user?.email === 'admin@bukucerita.com'" 
+                <Link v-if="$page.props.auth.user?.email === 'admin@bukucerita.my.id'" 
                       :href="route('admin.dashboard')" 
                       class="btn-admin">
                   <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -166,7 +166,7 @@
               </span>
             </div>
             
-            <Link v-if="$page.props.auth.user?.email === 'admin@bukucerita.com'" 
+            <Link v-if="$page.props.auth.user?.email === 'admin@bukucerita.my.id'" 
                   :href="route('admin.dashboard')" 
                   class="mobile-btn-admin">
               <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
