@@ -25,6 +25,32 @@ class AdminUserSeeder extends Seeder
             ]
         );
 
-        $this->command->info('Admin users created successfully:');
+        // Additional admin users requested
+        $userAzmi = User::firstOrCreate(
+            ['email' => 'azmifauzan@gmail.com'],
+            [
+                'name' => 'Azmi Fauzan',
+                'password' => Hash::make('BukuCerita12345!'),
+                'email_verified_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+
+        $userMeilati = User::firstOrCreate(
+            ['email' => 'meilati.fanita@gmail.com'],
+            [
+                'name' => 'Meilati Fanita',
+                'password' => Hash::make('BukuCerita12345!'),
+                'email_verified_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+
+        $this->command->info('Admin users created/ensured successfully:');
+        $this->command->line('- ' . $mainAdmin->email);
+        $this->command->line('- ' . $userAzmi->email);
+        $this->command->line('- ' . $userMeilati->email);
     }
 }

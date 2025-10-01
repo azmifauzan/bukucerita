@@ -15,6 +15,8 @@ class BookSeeder extends Seeder
         // Create sample books for each category
         $categories = \App\Models\Category::all();
         $users = \App\Models\User::all();
+        $azmiUser = \App\Models\User::where('email', 'azmifauzan@gmail.com')->first();
+        $meilatiUser = \App\Models\User::where('email', 'meilati.fanita@gmail.com')->first();
 
         if ($categories->isEmpty() || $users->isEmpty()) {
             return;
@@ -30,7 +32,7 @@ class BookSeeder extends Seeder
                 'youtube_link' => 'https://www.youtube.com/watch?v=gS_6-ov447U',
                 'status' => 'approved',
                 'category_id' => $categories->where('slug', 'edukatif')->first()?->id ?? $categories->first()->id,
-                'user_id' => $users->first()->id,
+                'user_id' => $azmiUser?->id ?? $users->first()->id,
                 'age_min' => 3,
                 'age_max' => 12,
                 'views' => 0,
