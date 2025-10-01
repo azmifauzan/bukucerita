@@ -1,5 +1,47 @@
 <template>
-  <Head title="Koleksi Buku" />
+  <Head>
+    <title>{{ pageTitle }}</title>
+    <meta name="description" :content="pageDescription">
+    <meta name="keywords" :content="pageKeywords">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" :content="pageTitle">
+    <meta property="og:description" :content="pageDescription">
+    <meta property="og:url" :content="currentUrl">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" :content="pageTitle">
+    <meta name="twitter:description" :content="pageDescription">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "{{ pageTitle }}",
+      "description": "{{ pageDescription }}",
+      "url": "{{ currentUrl }}",
+      "mainEntity": {
+        "@type": "ItemList",
+        "numberOfItems": {{ books.total }},
+        "itemListElement": [
+          @foreach($books as $index => $book)
+          {
+            "@type": "Book",
+            "position": {{ $index + 1 }},
+            "name": "{{ $book->judul }}",
+            "author": "{{ $book->pengarang }}",
+            "genre": "{{ $book->category->name }}",
+            "url": "{{ route('books.show', $book->id) }}"
+          }{{ !$loop->last ? ',' : '' }}
+          @endforeach
+        ]
+      }
+    }
+    </script>
+  </Head>
   
   <PublicLayout>
     <!-- Header Section -->
@@ -192,6 +234,64 @@ const hasActiveFilters = computed(() => {
   return props.filters.search || props.filters.category || props.filters.age
 })
 
+// SEO Computed Properties
+const pageTitle = computed(() => {
+  let title = 'Koleksi Buku Cerita Anak Digital'
+  
+  if (props.filters.category) {
+    const categoryName = getCategoryName(props.filters.category)
+    title = `Cerita Anak ${categoryName} - Koleksi Buku Digital`
+  }
+  
+  if (props.filters.search) {
+    title = `Hasil Pencarian: ${props.filters.search} - Buku Cerita Anak`
+  }
+  
+  if (props.filters.age) {
+    title += ` untuk Usia ${props.filters.age} Tahun`
+  }
+  
+  return title + ' | Buku Cerita'
+})
+
+const pageDescription = computed(() => {
+  let description = `Jelajahi ${props.books.total} cerita anak digital interaktif.`
+  
+  if (props.filters.category) {
+    const categoryName = getCategoryName(props.filters.category)
+    description = `Temukan cerita anak kategori ${categoryName}. ${props.books.total} buku digital interaktif.`
+  }
+  
+  if (props.filters.search) {
+    description = `Hasil pencarian "${props.filters.search}" - ${props.books.total} cerita anak ditemukan.`
+  }
+  
+  description += ' Platform buku cerita anak Indonesia dengan teknologi AI Google Gemini.'
+  
+  return description
+})
+
+const pageKeywords = computed(() => {
+  let keywords = 'buku cerita anak, cerita digital anak, bacaan anak online'
+  
+  if (props.filters.category) {
+    const categoryName = getCategoryName(props.filters.category)
+    keywords = `cerita anak ${categoryName.toLowerCase()}, buku ${categoryName.toLowerCase()}, ` + keywords
+  }
+  
+  if (props.filters.search) {
+    keywords = `${props.filters.search}, ` + keywords
+  }
+  
+  keywords += ', AI cerita, Google Gemini, dongeng anak'
+  
+  return keywords
+})
+
+const currentUrl = computed(() => {
+  return route('books.index', props.filters)
+})
+
 const paginationPages = computed(() => {
   const pages = []
   const current = props.books.current_page
@@ -260,6 +360,7 @@ const getPageUrl = (page) => {
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -267,6 +368,7 @@ const getPageUrl = (page) => {
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

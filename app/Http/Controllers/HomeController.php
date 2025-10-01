@@ -27,10 +27,18 @@ class HomeController extends Controller
             $query->approved();
         }])->get();
 
+        // SEO data
+        $totalBooks = Book::approved()->count();
+        $totalViews = Book::approved()->sum('views');
+
         return Inertia::render('Home', [
             'featuredBooks' => $featuredBooks,
             'recentBooks' => $recentBooks,
             'categories' => $categories,
+            'seo' => [
+                'totalBooks' => $totalBooks,
+                'totalViews' => $totalViews,
+            ]
         ]);
     }
 }

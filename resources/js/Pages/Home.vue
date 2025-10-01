@@ -1,5 +1,51 @@
 <template>
-  <Head title="Beranda" />
+  <Head>
+    <title>Buku Cerita - Platform Cerita Anak Digital Indonesia Terlengkap</title>
+    <meta name="description" content="Temukan ribuan cerita anak interaktif di Buku Cerita. Platform digital terlengkap dengan teknologi AI Google Gemini untuk mengembangkan imajinasi dan minat baca anak-anak Indonesia.">
+    <meta name="keywords" content="buku cerita anak indonesia, cerita interaktif anak, dongeng digital, bacaan anak online, AI cerita anak, Google Gemini, platform buku anak">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Buku Cerita - Platform Cerita Anak Digital Indonesia Terlengkap">
+    <meta property="og:description" content="Temukan ribuan cerita anak interaktif dengan teknologi AI Google Gemini. Platform digital terlengkap untuk mengembangkan imajinasi anak-anak Indonesia.">
+    <meta property="og:url" :content="route('home')">
+    <meta property="og:site_name" content="Buku Cerita">
+    <meta property="og:locale" content="id_ID">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Buku Cerita - Platform Cerita Anak Digital Indonesia">
+    <meta name="twitter:description" content="Ribuan cerita anak interaktif dengan teknologi AI Google Gemini untuk mengembangkan imajinasi si kecil.">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#f97316">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Buku Cerita">
+    <meta name="msapplication-TileColor" content="#f97316">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Buku Cerita",
+      "alternateName": "Buku Cerita Indonesia",
+      "url": {{ JSON.stringify(route('home')) }},
+      "description": "Platform cerita anak digital Indonesia terlengkap dengan teknologi AI Google Gemini",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {{ JSON.stringify(route('books.index') + '?search={search_term_string}') }},
+        "query-input": "required name=search_term_string"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Buku Cerita",
+        "url": {{ JSON.stringify(route('home')) }}
+      }
+    }
+    </script>
+  </Head>
   
   <PublicLayout>
     <!-- Hero Section -->
@@ -44,7 +90,7 @@
           <div v-for="book in featuredBooks" :key="book.id" class="card hover:shadow-lg transition-shadow duration-300">
             <div class="aspect-w-3 aspect-h-4">
               <img :src="book.cover || '/images/default-book-cover.jpg'" 
-                   :alt="book.judul"
+                   :alt="`Cover buku ${book.judul} - cerita ${book.category.name} untuk anak`"
                    class="w-full h-48 object-cover">
             </div>
             <div class="p-6">
@@ -125,7 +171,7 @@
           <div v-for="book in recentBooks" :key="book.id" class="card hover:shadow-lg transition-shadow duration-300">
             <div class="aspect-w-3 aspect-h-4">
               <img :src="book.cover || '/images/default-book-cover.jpg'" 
-                   :alt="book.judul"
+                   :alt="`Cover buku terbaru ${book.judul} oleh ${book.pengarang} - cerita anak ${book.category.name}`"
                    class="w-full h-40 object-cover">
             </div>
             <div class="p-4">
@@ -192,6 +238,7 @@ defineProps({
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -199,6 +246,7 @@ defineProps({
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

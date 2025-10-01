@@ -1,5 +1,63 @@
 <template>
-  <Head :title="book.judul" />
+  <Head>
+    <title>{{ book.judul }} - Cerita Anak Digital | Buku Cerita</title>
+    <meta name="description" :content="`Baca cerita '${book.judul}' oleh ${book.pengarang}. ${book.sinopsis.substring(0, 150)}... Cerita interaktif untuk anak usia ${book.age_min}-${book.age_max} tahun.`">
+    <meta name="keywords" :content="`${book.judul}, ${book.pengarang}, cerita anak ${book.category.name.toLowerCase()}, buku digital anak, ${book.age_min}-${book.age_max} tahun`">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="book">
+    <meta property="og:title" :content="`${book.judul} - Cerita Anak Digital | Buku Cerita`">
+    <meta property="og:description" :content="`Baca cerita '${book.judul}' oleh ${book.pengarang}. Cerita interaktif untuk anak usia ${book.age_min}-${book.age_max} tahun dengan teknologi AI.`">
+    <meta property="og:image" :content="book.cover || '/images/default-book-cover.jpg'">
+    <meta property="og:url" :content="route('books.show', book.id)">
+    <meta property="book:author" :content="book.pengarang">
+    <meta property="book:genre" :content="book.category.name">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" :content="`${book.judul} - Cerita Anak Digital`">
+    <meta name="twitter:description" :content="`Cerita '${book.judul}' oleh ${book.pengarang} untuk anak usia ${book.age_min}-${book.age_max} tahun.`">
+    <meta name="twitter:image" :content="book.cover || '/images/default-book-cover.jpg'">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Book",
+      "name": "{{ book.judul }}",
+      "author": {
+        "@type": "Person",
+        "name": "{{ book.pengarang }}"
+      },
+      "description": "{{ book.sinopsis }}",
+      "genre": "{{ book.category.name }}",
+      "bookFormat": "EBook",
+      "inLanguage": "id-ID",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Children",
+        "suggestedMinAge": {{ book.age_min }},
+        "suggestedMaxAge": {{ book.age_max }}
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Buku Cerita"
+      },
+      "url": "{{ route('books.show', book.id) }}",
+      "image": "{{ book.cover || '/images/default-book-cover.jpg' }}",
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/ReadAction",
+        "userInteractionCount": {{ book.views }}
+      },
+      "isAccessibleForFree": true,
+      "potentialAction": {
+        "@type": "ReadAction",
+        "target": "{{ route('books.show', book.id) }}"
+      }
+    }
+    </script>
+  </Head>
   
   <PublicLayout>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -7,14 +65,18 @@
       <nav class="flex mb-8" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-1 md:space-x-3">
           <li class="inline-flex items-center">
-            <Link :href="route('home')" class="text-gray-500 hover:text-gray-700">
+            <Link :href="route('home')" 
+                  class="text-gray-500 hover:text-gray-700"
+                  title="Kembali ke Beranda Buku Cerita">
               Beranda
             </Link>
           </li>
           <li>
             <div class="flex items-center">
               <span class="text-gray-400 mx-1">/</span>
-              <Link :href="route('books.index')" class="text-gray-500 hover:text-gray-700">
+              <Link :href="route('books.index')" 
+                    class="text-gray-500 hover:text-gray-700"
+                    title="Lihat Semua Koleksi Buku Cerita">
                 Koleksi Buku
               </Link>
             </div>
@@ -34,7 +96,7 @@
           <div class="card sticky top-8">
             <div class="aspect-w-3 aspect-h-4 mb-4">
               <img :src="book.cover || '/images/default-book-cover.jpg'" 
-                   :alt="book.judul"
+                   :alt="`Cover buku cerita ${book.judul} oleh ${book.pengarang} - ${book.category.name} untuk usia ${book.age_min}-${book.age_max} tahun`"
                    class="w-full h-64 object-cover rounded-lg">
             </div>
             
@@ -46,7 +108,7 @@
               </div>
               
               <h1 class="text-2xl font-bold text-dark-900 mb-2">{{ book.judul }}</h1>
-              <p class="text-gray-600 mb-4">oleh {{ book.pengarang }}</p>
+              <h2 class="text-gray-600 mb-4">oleh {{ book.pengarang }}</h2>
               
               <div class="grid grid-cols-2 gap-4 text-sm text-gray-600 mb-6">
                 <div>
@@ -81,7 +143,7 @@
           <!-- Synopsis -->
           <div class="card mb-8">
             <div class="p-6">
-              <h2 class="text-xl font-bold text-dark-900 mb-4">Sinopsis</h2>
+              <h3 class="text-xl font-bold text-dark-900 mb-4">Sinopsis</h3>
               <p class="text-gray-700 leading-relaxed">{{ book.sinopsis }}</p>
             </div>
           </div>
@@ -89,7 +151,7 @@
           <!-- Gemini Story Access -->
           <div id="gemini-story-embed" class="card mb-8">
             <div class="p-6">
-              <h2 class="text-xl font-bold text-dark-900 mb-4">Cerita Interaktif</h2>
+              <h3 class="text-xl font-bold text-dark-900 mb-4">Cerita Interaktif</h3>
               <p class="text-gray-600 mb-4">
                 Cerita ini dibuat menggunakan Google Gemini AI. Klik tombol di bawah untuk membaca cerita lengkap.
               </p>
@@ -253,6 +315,7 @@ const getYouTubeEmbedUrl = (url) => {
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -260,6 +323,7 @@ const getYouTubeEmbedUrl = (url) => {
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
