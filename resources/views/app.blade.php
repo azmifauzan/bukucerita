@@ -34,11 +34,11 @@
         <!-- Canonical URL -->
         <link rel="canonical" href="{{ request()->url() }}">
         
-        <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-        @if(file_exists(public_path('apple-touch-icon.png')))
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
-        @endif
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    @if(file_exists(public_path('apple-touch-icon.png')))
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    @endif
         
         <title inertia>{{ config('app.name', 'BukuCerita') }}</title>
 

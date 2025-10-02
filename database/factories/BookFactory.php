@@ -16,12 +16,15 @@ class BookFactory extends Factory
      */
     public function definition(): array
     {
+        $judul = fake()->sentence(3);
+
         return [
-            'judul' => fake()->sentence(3),
+            'judul' => $judul,
+            'slug' => \App\Models\Book::generateSlug($judul),
             'pengarang' => fake()->name(),
             'sinopsis' => fake()->paragraph(3),
-            'cover' => 'https://picsum.photos/400/600?random=' . fake()->numberBetween(1, 100),
-            'link' => 'https://gemini.google.com/share/' . fake()->regexify('[a-f0-9]{16}'),
+            'cover' => 'https://picsum.photos/400/600?random='.fake()->numberBetween(1, 100),
+            'link' => 'https://gemini.google.com/share/'.fake()->regexify('[a-f0-9]{16}'),
             'youtube_link' => fake()->optional(0.3)->randomElement([
                 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 'https://youtu.be/ScMzIvxBSi4',

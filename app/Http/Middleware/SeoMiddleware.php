@@ -19,7 +19,7 @@ class SeoMiddleware
 
         // Add SEO-friendly headers
         $response->headers->set('X-Robots-Tag', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
-        
+
         // Add cache headers for static content
         if ($request->is('sitemap.xml') || $request->is('robots.txt')) {
             $response->headers->set('Cache-Control', 'public, max-age=3600');

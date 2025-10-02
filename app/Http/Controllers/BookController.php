@@ -83,6 +83,7 @@ class BookController extends Controller
 
         Book::create([
             'judul' => $request->judul,
+            'slug' => Book::generateSlug($request->judul),
             'pengarang' => $request->pengarang,
             'sinopsis' => $request->sinopsis,
             'category_id' => $request->category_id,
@@ -167,6 +168,7 @@ class BookController extends Controller
 
         $book->update([
             'judul' => $request->judul,
+            'slug' => Book::generateSlug($request->judul, $book->id),
             'pengarang' => $request->pengarang,
             'sinopsis' => $request->sinopsis,
             'category_id' => $request->category_id,

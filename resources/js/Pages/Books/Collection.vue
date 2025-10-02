@@ -14,33 +14,6 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" :content="pageTitle">
     <meta name="twitter:description" :content="pageDescription">
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      "name": "{{ pageTitle }}",
-      "description": "{{ pageDescription }}",
-      "url": "{{ currentUrl }}",
-      "mainEntity": {
-        "@type": "ItemList",
-        "numberOfItems": {{ books.total }},
-        "itemListElement": [
-          @foreach($books as $index => $book)
-          {
-            "@type": "Book",
-            "position": {{ $index + 1 }},
-            "name": "{{ $book->judul }}",
-            "author": "{{ $book->pengarang }}",
-            "genre": "{{ $book->category->name }}",
-            "url": "{{ route('books.show', $book->id) }}"
-          }{{ !$loop->last ? ',' : '' }}
-          @endforeach
-        ]
-      }
-    }
-    </script>
   </Head>
   
   <PublicLayout>
@@ -155,7 +128,7 @@
                 <span class="text-xs text-gray-500">
                   Usia {{ book.age_min }}-{{ book.age_max }} tahun
                 </span>
-                <Link :href="route('books.show', book.id)" 
+                <Link :href="route('books.show', book.slug)" 
                       class="text-primary-600 hover:text-primary-700 font-medium text-sm">
                   Baca →
                 </Link>
@@ -213,7 +186,7 @@
 </template>
 
 <script setup>
-import { computed, reactive, watch } from 'vue'
+import { computed, reactive, watch, onMounted } from 'vue'
 import { Head, Link, router } from '@inertiajs/vue3'
 import PublicLayout from '@/Layouts/PublicLayout.vue'
 import { debounce } from 'lodash'
@@ -354,6 +327,36 @@ const getPageUrl = (page) => {
   })
   return `${url.pathname}?${params.toString()}`
 }
+
+// Add structured data for SEO
+onMounted(() => {
+  const itemListElements = props.books.data.map((book, index) => ({
+    "@type": "Book",
+    "position": index + 1,
+    "name": book.judul,
+    "author": book.pengarang,
+    "genre": book.category.name,
+    "url": window.location.origin + '/books/' + book.id
+  }))
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": pageTitle.value,
+    "description": pageDescription.value,
+    "url": window.location.href,
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": props.books.total,
+      "itemListElement": itemListElements
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.type = 'application/ld+json'
+  script.textContent = JSON.stringify(structuredData)
+  document.head.appendChild(script)
+})
 </script>
 
 <style scoped>

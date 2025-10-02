@@ -186,7 +186,7 @@
               <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div v-for="relatedBook in relatedBooks" :key="relatedBook.id" 
                      class="group">
-                  <Link :href="route('books.show', relatedBook.id)">
+                  <Link :href="route('books.show', relatedBook.slug)">
                     <div class="aspect-w-3 aspect-h-4 mb-2">
                       <img :src="relatedBook.cover || '/images/default-book-cover.jpg'" 
                            :alt="relatedBook.judul"

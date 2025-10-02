@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class SitemapController extends Controller
 {
@@ -20,7 +19,7 @@ class SitemapController extends Controller
             ->get();
 
         return response()->view('sitemap.index', compact('books', 'categories'))
-                        ->header('Content-Type', 'application/xml');
+            ->header('Content-Type', 'application/xml');
     }
 
     public function books()
@@ -32,6 +31,6 @@ class SitemapController extends Controller
             ->get();
 
         return response()->view('sitemap.books', compact('books'))
-                        ->header('Content-Type', 'application/xml');
+            ->header('Content-Type', 'application/xml');
     }
 }

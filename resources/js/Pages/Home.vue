@@ -23,28 +23,6 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Buku Cerita">
     <meta name="msapplication-TileColor" content="#f97316">
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Buku Cerita",
-      "alternateName": "Buku Cerita Indonesia",
-      "url": {{ JSON.stringify(route('home')) }},
-      "description": "Platform cerita anak digital Indonesia terlengkap dengan teknologi AI Google Gemini",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {{ JSON.stringify(route('books.index') + '?search={search_term_string}') }},
-        "query-input": "required name=search_term_string"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Buku Cerita",
-        "url": {{ JSON.stringify(route('home')) }}
-      }
-    }
-    </script>
   </Head>
   
   <PublicLayout>
@@ -112,7 +90,7 @@
                 <span class="text-xs text-gray-500">
                   Usia {{ book.age_min }}-{{ book.age_max }} tahun
                 </span>
-                <Link :href="route('books.show', book.id)" 
+                <Link :href="route('books.show', book.slug)" 
                       class="text-primary-600 hover:text-primary-700 font-medium text-sm">
                   Baca →
                 </Link>
@@ -124,7 +102,7 @@
     </section>
 
     <!-- Categories Section -->
-    <section v-if="categories.length > 0" class="py-16 bg-gray-50">
+    <!-- <section v-if="categories.length > 0" class="py-16 bg-gray-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-bold text-dark-900 mb-4">Kategori Cerita</h2>
@@ -149,10 +127,10 @@
           </Link>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- Recent Books Section -->
-    <section v-if="recentBooks.length > 0" class="py-16 bg-white">
+    <!-- <section v-if="recentBooks.length > 0" class="py-16 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
           <div>
@@ -183,7 +161,7 @@
                 <span class="text-xs text-gray-500">
                   {{ book.age_min }}-{{ book.age_max }}th
                 </span>
-                <Link :href="route('books.show', book.id)" 
+                <Link :href="route('books.show', book.slug)" 
                       class="text-primary-600 hover:text-primary-700 font-medium text-xs">
                   Baca
                 </Link>
@@ -192,7 +170,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- CTA Section -->
     <section class="py-16 bg-dark-900 text-white">
@@ -226,11 +204,39 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3'
 import PublicLayout from '@/Layouts/PublicLayout.vue'
+import { computed, onMounted } from 'vue'
 
 defineProps({
   featuredBooks: Array,
   recentBooks: Array,
   categories: Array,
+})
+
+// Add structured data for SEO
+onMounted(() => {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Buku Cerita",
+    "alternateName": "Buku Cerita Indonesia",
+    "url": window.location.origin,
+    "description": "Platform cerita anak digital Indonesia terlengkap dengan teknologi AI Google Gemini",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": `${window.location.origin}/books?search={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Buku Cerita",
+      "url": window.location.origin
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.type = 'application/ld+json'
+  script.textContent = JSON.stringify(structuredData)
+  document.head.appendChild(script)
 })
 </script>
 

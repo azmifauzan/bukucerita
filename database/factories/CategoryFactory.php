@@ -23,9 +23,9 @@ class CategoryFactory extends Factory
             'Fantasi' => 'Dunia magis dan makhluk fantasi',
             'Persahabatan' => 'Cerita tentang persahabatan dan kebersamaan',
         ];
-        
+
         $categoryName = fake()->randomElement(array_keys($categories));
-        
+
         return [
             'name' => $categoryName,
             'slug' => \Illuminate\Support\Str::slug($categoryName),

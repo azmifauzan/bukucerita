@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Book extends Model
 {
@@ -12,6 +13,7 @@ class Book extends Model
 
     protected $fillable = [
         'judul',
+        'slug',
         'pengarang',
         'sinopsis',
         'cover',
@@ -57,5 +59,30 @@ class Book extends Model
     public function incrementViews(): void
     {
         $this->increment('views');
+    }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    /**
+     * Generate a unique slug from the title.
+     */
+    public static function generateSlug(string $title, ?int $id = null): string
+    {
+        $slug = Str::slug($title);
+        $originalSlug = $slug;
+        $counter = 1;
+
+        while (static::where('slug', $slug)->when($id, fn ($query) => $query->where('id', '!=', $id))->exists()) {
+            $slug = $originalSlug.'-'.$counter;
+            $counter++;
+        }
+
+        return $slug;
     }
 }

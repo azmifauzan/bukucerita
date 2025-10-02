@@ -1,6 +1,6 @@
 <template>
   <Head>
-    <title>{{ book.judul }} - Cerita Anak Digital | Buku Cerita</title>
+    <title>{{ book.judul }} - Cerita Anak Digital</title>
     <meta name="description" :content="`Baca cerita '${book.judul}' oleh ${book.pengarang}. ${book.sinopsis.substring(0, 150)}... Cerita interaktif untuk anak usia ${book.age_min}-${book.age_max} tahun.`">
     <meta name="keywords" :content="`${book.judul}, ${book.pengarang}, cerita anak ${book.category.name.toLowerCase()}, buku digital anak, ${book.age_min}-${book.age_max} tahun`">
     
@@ -9,7 +9,7 @@
     <meta property="og:title" :content="`${book.judul} - Cerita Anak Digital | Buku Cerita`">
     <meta property="og:description" :content="`Baca cerita '${book.judul}' oleh ${book.pengarang}. Cerita interaktif untuk anak usia ${book.age_min}-${book.age_max} tahun dengan teknologi AI.`">
     <meta property="og:image" :content="book.cover || '/images/default-book-cover.jpg'">
-    <meta property="og:url" :content="route('books.show', book.id)">
+    <meta property="og:url" :content="route('books.show', book.slug)">
     <meta property="book:author" :content="book.pengarang">
     <meta property="book:genre" :content="book.category.name">
     
@@ -18,45 +18,6 @@
     <meta name="twitter:title" :content="`${book.judul} - Cerita Anak Digital`">
     <meta name="twitter:description" :content="`Cerita '${book.judul}' oleh ${book.pengarang} untuk anak usia ${book.age_min}-${book.age_max} tahun.`">
     <meta name="twitter:image" :content="book.cover || '/images/default-book-cover.jpg'">
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Book",
-      "name": "{{ book.judul }}",
-      "author": {
-        "@type": "Person",
-        "name": "{{ book.pengarang }}"
-      },
-      "description": "{{ book.sinopsis }}",
-      "genre": "{{ book.category.name }}",
-      "bookFormat": "EBook",
-      "inLanguage": "id-ID",
-      "audience": {
-        "@type": "Audience",
-        "audienceType": "Children",
-        "suggestedMinAge": {{ book.age_min }},
-        "suggestedMaxAge": {{ book.age_max }}
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Buku Cerita"
-      },
-      "url": "{{ route('books.show', book.id) }}",
-      "image": "{{ book.cover || '/images/default-book-cover.jpg' }}",
-      "interactionStatistic": {
-        "@type": "InteractionCounter",
-        "interactionType": "https://schema.org/ReadAction",
-        "userInteractionCount": {{ book.views }}
-      },
-      "isAccessibleForFree": true,
-      "potentialAction": {
-        "@type": "ReadAction",
-        "target": "{{ route('books.show', book.id) }}"
-      }
-    }
-    </script>
   </Head>
   
   <PublicLayout>
@@ -158,8 +119,14 @@
               
               <div class="flex flex-col sm:flex-row gap-4 items-center justify-between p-4 bg-gradient-to-r from-primary-50 to-blue-50 rounded-lg border border-primary-200">
                 <div class="flex items-center space-x-3">
-                  <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
-                    <span class="text-xl">🤖</span>
+                  <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
+                    <!-- Google / Gemini logo (inline SVG) -->
+                    <svg class="w-8 h-8" viewBox="0 0 48 48" role="img" aria-label="Google logo" xmlns="http://www.w3.org/2000/svg">
+                      <path fill="#4285F4" d="M24 9.5c3.9 0 7 1.3 9.3 3.5l7-7C36.9 2.6 30.9 0 24 0 14.8 0 6.9 4.6 2.6 11.4l8.5 6.6C13.9 13.1 18.5 9.5 24 9.5z"/>
+                      <path fill="#34A853" d="M46.9 24.5c0-1.6-.1-3.1-.4-4.6H24v8.7h12.8c-.6 3.3-2.6 6.1-5.6 7.9l8.6 6.7c5-4.6 7.1-11.5 7.1-19.7z"/>
+                      <path fill="#FBBC05" d="M10.9 28.1c-.6-1.9-.6-3.9 0-5.8L2.4 15.7C.9 18.7 0 21.9 0 25.2s.9 6.5 2.4 9.5l8.5-6.6z"/>
+                      <path fill="#EA4335" d="M24 48c6.9 0 12.9-2.6 17.4-6.9l-8.6-6.7C31.1 34.7 27.9 36 24 36 18.5 36 13.9 32.4 11 28.1l-8.5 6.6C6.9 43.4 14.8 48 24 48z"/>
+                    </svg>
                   </div>
                   <div>
                     <h3 class="font-medium text-gray-900">Baca dengan Google Gemini</h3>
@@ -248,7 +215,7 @@
               <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div v-for="relatedBook in relatedBooks" :key="relatedBook.id" 
                      class="group">
-                  <Link :href="route('books.show', relatedBook.id)">
+                  <Link :href="route('books.show', relatedBook.slug)">
                     <div class="aspect-w-3 aspect-h-4 mb-2">
                       <img :src="relatedBook.cover || '/images/default-book-cover.jpg'" 
                            :alt="relatedBook.judul"
@@ -270,13 +237,57 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { Head, Link } from '@inertiajs/vue3'
 import PublicLayout from '@/Layouts/PublicLayout.vue'
 
 const props = defineProps({
   book: Object,
   relatedBooks: Array,
+})
+
+// Add structured data for SEO
+onMounted(() => {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "name": props.book.judul,
+    "author": {
+      "@type": "Person",
+      "name": props.book.pengarang
+    },
+    "description": props.book.sinopsis,
+    "genre": props.book.category.name,
+    "bookFormat": "EBook",
+    "inLanguage": "id-ID",
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "Children",
+      "suggestedMinAge": props.book.age_min,
+      "suggestedMaxAge": props.book.age_max
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Buku Cerita"
+    },
+    "url": window.location.href,
+    "image": props.book.cover || '/images/default-book-cover.jpg',
+    "interactionStatistic": {
+      "@type": "InteractionCounter",
+      "interactionType": "https://schema.org/ReadAction",
+      "userInteractionCount": props.book.views
+    },
+    "isAccessibleForFree": true,
+    "potentialAction": {
+      "@type": "ReadAction",
+      "target": window.location.href
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.type = 'application/ld+json'
+  script.textContent = JSON.stringify(structuredData)
+  document.head.appendChild(script)
 })
 
 const canEdit = computed(() => {

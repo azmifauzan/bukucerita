@@ -211,41 +211,129 @@
       <slot />
     </main>
 
+    <!-- Visual Separator -->
+    <div class="relative">
+      <!-- Gradient Divider -->
+      <div class="h-1 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600"></div>
+      
+      <!-- Decorative Wave -->
+      <div class="absolute inset-0 overflow-hidden">
+        <svg class="absolute bottom-0 left-0 w-full h-6 text-orange-500 transform" 
+             fill="currentColor" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
+        </svg>
+      </div>
+    </div>
+
     <!-- Footer -->
-    <footer class="bg-dark-900 text-white">
-      <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0); background-size: 20px 20px;"></div>
+      </div>
+      
+      <!-- Orange accent at top -->
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600"></div>
+      
+      <div class="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div class="col-span-1 md:col-span-2">
-            <h3 class="text-2xl font-bold text-primary-500 mb-4">Buku Cerita</h3>
-            <p class="text-gray-300 mb-4">
+            <!-- Logo and Brand -->
+            <div class="flex items-center space-x-3 mb-6">
+              <div class="bg-gradient-to-br from-orange-500 to-orange-600 p-3 rounded-xl shadow-lg">
+                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+                </svg>
+              </div>
+              <h3 class="text-3xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+                Buku Cerita
+              </h3>
+            </div>
+            
+            <p class="text-gray-300 text-lg leading-relaxed mb-6 max-w-2xl">
               Platform koleksi cerita anak digital yang dihasilkan oleh AI Google Gemini. 
-              Menyediakan cerita berkualitas untuk mengembangkan minat baca anak-anak.
+              Menyediakan cerita berkualitas untuk mengembangkan minat baca anak-anak Indonesia.
             </p>
+            
+            <!-- Features -->
+            <div class="flex flex-wrap gap-4">
+              <div class="flex items-center space-x-2 bg-gray-800 px-4 py-2 rounded-full">
+                <svg class="w-4 h-4 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="text-sm text-gray-300">Cerita Berkualitas</span>
+              </div>
+              <div class="flex items-center space-x-2 bg-gray-800 px-4 py-2 rounded-full">
+                <svg class="w-4 h-4 text-orange-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-sm text-gray-300">Gratis untuk Semua</span>
+              </div>
+            </div>
           </div>
           
-          <div>
-            <h4 class="text-lg font-semibold mb-4">Menu</h4>
-            <ul class="space-y-2">
-              <li><Link :href="route('home')" class="text-gray-300 hover:text-primary-400">Beranda</Link></li>
-              <li><Link :href="route('books.index')" class="text-gray-300 hover:text-primary-400">Koleksi Buku</Link></li>
-              <li><Link :href="route('guide')" class="text-gray-300 hover:text-primary-400">Panduan</Link></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 class="text-lg font-semibold mb-4">Untuk Orang Tua</h4>
-            <ul class="space-y-2">
-              <li><a href="#" class="text-gray-300 hover:text-primary-400">Tips Membaca</a></li>
-              <li><a href="#" class="text-gray-300 hover:text-primary-400">Panduan Usia</a></li>
-              <li><a href="#" class="text-gray-300 hover:text-primary-400">FAQ</a></li>
+          <div class="col-span-1">
+            <h4 class="text-xl font-semibold mb-6 text-orange-400">Navigasi</h4>
+            <ul class="space-y-3">
+              <li>
+                <Link :href="route('home')" 
+                      class="flex items-center space-x-2 text-gray-300 hover:text-orange-400 transition-colors duration-200 group">
+                  <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                  </svg>
+                  <span>Beranda</span>
+                </Link>
+              </li>
+              <li>
+                <Link :href="route('books.index')" 
+                      class="flex items-center space-x-2 text-gray-300 hover:text-orange-400 transition-colors duration-200 group">
+                  <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
+                  </svg>
+                  <span>Koleksi Buku</span>
+                </Link>
+              </li>
+              <li>
+                <Link :href="route('guide')" 
+                      class="flex items-center space-x-2 text-gray-300 hover:text-orange-400 transition-colors duration-200 group">
+                  <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>Panduan</span>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
         
-        <div class="mt-8 pt-8 border-t border-gray-700 text-center">
-          <p class="text-gray-400">&copy; 2025 Buku Cerita. Dibuat dengan ❤️ untuk anak-anak Indonesia.</p>
+        <!-- Bottom Section -->
+        <div class="mt-12 pt-8 border-t border-gray-700">
+          <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div class="text-center md:text-left">
+              <p class="text-gray-400 text-sm">
+                &copy; 2025 Buku Cerita. Dibuat dengan 
+                <span class="text-red-400 animate-pulse">❤️</span> 
+                untuk anak-anak Indonesia.
+              </p>
+            </div>
+            
+            <!-- Powered by -->
+            <div class="flex items-center space-x-2 text-sm text-gray-500">
+              <span>Powered by</span>
+              <div class="flex items-center space-x-1 bg-gray-800 px-2 py-1 rounded">
+                <svg class="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2L2 7V10C2 16 6 20.5 12 22C18 20.5 22 16 22 10V7L12 2Z"/>
+                </svg>
+                <span class="text-blue-400 font-medium">Google Gemini AI</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      
+      <!-- Decorative elements -->
+      <div class="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-orange-600/20 to-transparent rounded-full transform translate-x-16 translate-y-16"></div>
+      <div class="absolute top-1/2 left-0 w-24 h-24 bg-gradient-to-br from-orange-500/10 to-transparent rounded-full transform -translate-x-12"></div>
     </footer>
   </div>
 </template>

@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
     @foreach ($books as $book)
     <url>
-        <loc>{{ route('books.show', $book->id) }}</loc>
+        <loc>{{ route('books.show', $book->slug) }}</loc>
         <lastmod>{{ $book->updated_at->toAtomString() }}</lastmod>
         <priority>0.9</priority>
         <changefreq>monthly</changefreq>

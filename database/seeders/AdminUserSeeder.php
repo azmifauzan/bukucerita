@@ -29,7 +29,7 @@ class AdminUserSeeder extends Seeder
         $userAzmi = User::firstOrCreate(
             ['email' => 'azmifauzan@gmail.com'],
             [
-                'name' => 'Azmi Fauzan',
+                'name' => 'Fauzan Azmi',
                 'password' => Hash::make('BukuCerita12345!'),
                 'email_verified_at' => now(),
                 'created_at' => now(),
@@ -49,8 +49,8 @@ class AdminUserSeeder extends Seeder
         );
 
         $this->command->info('Admin users created/ensured successfully:');
-        $this->command->line('- ' . $mainAdmin->email);
-        $this->command->line('- ' . $userAzmi->email);
-        $this->command->line('- ' . $userMeilati->email);
+        $this->command->line('- '.$mainAdmin->email);
+        $this->command->line('- '.$userAzmi->email);
+        $this->command->line('- '.$userMeilati->email);
     }
 }
